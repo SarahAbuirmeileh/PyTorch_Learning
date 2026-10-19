@@ -17,7 +17,8 @@ import torch
 # 1. Create our data
 # equation y = a + b*x
 
-
+# Create device agnostic code
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 start = 0
 end = 1
@@ -75,16 +76,22 @@ class LinearRegressionModel(nn.Module):
     super().__init__()
 
     # Define the paramters with random value
-
-    self.weight = nn.Parameter(torch.rand(1,
-                                          requires_grad=True,
-                                          dtype=torch.float))
-    self.bias = nn.Parameter(torch.rand(1,
-                                        requires_grad=True,
-                                        dtype=torch.float))
+    # self.weight = nn.Parameter(torch.rand(1,
+    #                                       requires_grad=True,
+    #                                       dtype=torch.float))
+    # self.bias = nn.Parameter(torch.rand(1,
+    #                                     requires_grad=True,
+    #                                     dtype=torch.float))
+    
+    # Or create a linear layer (this will do the same as the above)
+    # and it will be responsible for creating the parameters
+    
+    self.linear_layer = nn.Linear(in_features=1,
+                                  out_features=1)
 
   def forward(self, x: torch.tensor)->torch.tensor:
-    return self.weight * x + self.bias
+    # return self.weight * x + self.bias
+    return self.linear_layer(x)
 
 # 2.2 see out model
 
@@ -92,6 +99,8 @@ RANDOM_SEED = 42
 torch.manual_seed(RANDOM_SEED)
 
 model = LinearRegressionModel()
+model.to(device)
+
 print(model.parameters())
 print(model.state_dict())
 
@@ -199,4 +208,3 @@ with torch.inference_mode():
   loaded_y_preds = loaded_model(X_test)
 
 print(y_preds == loaded_y_preds)
-
