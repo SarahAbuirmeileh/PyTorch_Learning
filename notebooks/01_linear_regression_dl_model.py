@@ -119,7 +119,7 @@ optimizer = optim.SGD(params=model.parameters(), lr=0.01)
 
 epochs = 100
 
-# Track diffrenet values
+# Track different values
 epoch_count = []
 loss_values = []
 test_loss_values = []
@@ -137,7 +137,7 @@ for epoch in range(epochs):
   # Calculate the loss
   loss = loss_fn(y_preds, y_train)
 
-  # delete the gradaeints from prevoisue itration -> it get accumelated by defult in pyTorch
+  # delete the gradients from previous iteration -> it get accumelated by defult in pyTorch
   optimizer.zero_grad()
 
   # Calculate the gradients (see how chaning the paramters will change the loss)
@@ -166,19 +166,37 @@ with torch.inference_mode():
 
 plot_predictions(predictions=y_pred)
 
+# Save our model
+from pathlib import Path
 
-# The content of the training loop in simple way
-# model.train()
-# y_preds = model(X_train)
-# loss = loss_fn(y_preds, y_train)
+MODEL_PATH = Path("models")
+MODEL_PATH.mkdir(parents=True, exist_ok=True)
 
-# optimizer.zero_grad()
+MODEL_NAME = "01_pytorch_linear_regression_model.pth"
+MODEL_SAVE_PATH = MODEL_PATH / MODEL_NAME
 
-# loss.backward()
-# optimizer.step()
+torch.save(obj=model.state_dict(),
+           f=MODEL_SAVE_PATH)
 
-# model.eval()
-# with torch.inference_mode():
-#   test_preds = model(X_test)
-#   test_loss = loss_fn(test_preds, y_test)
-#   print(f"Epoch: {epoch} | Loss: {loss} | Test Loss: {test_loss}")
+# Load our model
+
+loaded_dict_state = torch.load(f=MODEL_SAVE_PATH)
+
+# Create instance form our model class
+loaded_model = LinearRegressionModel()
+
+# Load the state dict
+loaded_model.load_state_dict(loaded_dict_state)
+
+# Test the predictions from the original and loaded model
+
+model.eval()
+with torch.inference_mode():
+  y_preds = model(X_test)
+
+loaded_model.eval()
+with torch.inference_mode():
+  loaded_y_preds = loaded_model(X_test)
+
+print(y_preds == loaded_y_preds)
+
