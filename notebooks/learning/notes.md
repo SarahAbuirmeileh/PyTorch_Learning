@@ -126,3 +126,11 @@ Used when testing the model or making predictions.
 `model.eval()`
 
 when we want to evaluate the model inside the training loop 
+
+
+> the best practis:
+> ```
+> model.eval()
+> with torch.infrence_mode():
+> # make the predictions
+> ```
