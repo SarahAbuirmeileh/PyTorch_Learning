@@ -12,7 +12,9 @@
 
 
 
-# Data Types
+# 00_PYTorch_Fundamentals
+
+## Data Types
 ### To know what is the datatype of 
 > x is a tensor
 
@@ -27,7 +29,7 @@
 `x.float()`
 
 
-# Range
+## Range
 ### In Tensors 
 to create a range in a tensor 
 
@@ -37,7 +39,7 @@ to create a range in a tensor
 `for i in range(10)`
 
 
-# Tensors operations
+## Tensors operations
 ### Addition
 `torch.add(x, 10)`
 
@@ -47,7 +49,7 @@ to create a range in a tensor
 `torch.matmul(x, x)`
 
 
-# Aggregation  
+## Aggregation  
 ### min
 `x.min()`
 
@@ -59,7 +61,7 @@ to create a range in a tensor
 `torch.argmin(x)`
 
 
-# Manipulating a Tensor
+## Manipulating a Tensor
 ### Reshaping to a compatible shape
 `x.reshape([])`
 
@@ -75,7 +77,7 @@ to create a range in a tensor
 
 
 
-# Convert between tensors and numPy arrays
+## Convert between tensors and numPy arrays
 ### From tensors to NumPy
 `x.numpy()`
 
@@ -83,7 +85,7 @@ to create a range in a tensor
 `torch.from_numpy(numpy_array)` 
 
 
-# Reproducibility in randomness
+## Reproducibility in randomness
 ### For CPU and general PyTorch randomness
 RANDOM_SEED = a number
 `torch.manual_seed(RANDOM_SEED)`
@@ -92,7 +94,7 @@ RANDOM_SEED = a number
 `torch.cuda.manual_seed(RANDOM_SEED)`
 
 
-# Tensors on GPU/CPU
+## Tensors on GPU/CPU
 ### Create a tensor in a specific device
 `x = torch.tensor(device='cuda')`
 
@@ -102,3 +104,25 @@ RANDOM_SEED = a number
 `x.cpu()` // or `cuda`
 
 
+# 01_PyTorch_Workflow
+
+> `model` is an instance of out nn model 
+
+## Model Moods
+### 1. Training mode
+`model.training()`
+
+### 2. Evaluation mode
+Used when testing the model or making predictions.
+```
+    # This is to make a prediction
+    with torch.inference_mode():
+        y_predictions = model(input_test_data)
+```
+
+> We can do it without the ` with torch.inference_mode():`, but adding it 
+> reduces the computations via disabling tracking the gradients
+
+`model.eval()`
+
+when we want to evaluate the model inside the training loop 
