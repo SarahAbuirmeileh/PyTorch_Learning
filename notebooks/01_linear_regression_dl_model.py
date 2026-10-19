@@ -166,3 +166,19 @@ with torch.inference_mode():
 
 plot_predictions(predictions=y_pred)
 
+
+# The content of the training loop in simple way
+# model.train()
+# y_preds = model(X_train)
+# loss = loss_fn(y_preds, y_train)
+
+# optimizer.zero_grad()
+
+# loss.backward()
+# optimizer.step()
+
+# model.eval()
+# with torch.inference_mode():
+#   test_preds = model(X_test)
+#   test_loss = loss_fn(test_preds, y_test)
+#   print(f"Epoch: {epoch} | Loss: {loss} | Test Loss: {test_loss}")
