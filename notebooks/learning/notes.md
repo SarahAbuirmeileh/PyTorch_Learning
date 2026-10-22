@@ -15,10 +15,13 @@
 # 00_PYTorch_Fundamentals
 
 ## Data Types
-### To know what is the datatype of 
+### To know what is the datatype of a tensor (the data in the tensor)
 > x is a tensor
 
 `x.dtype()`
+
+### To know the datatype of the variable itself (np.array/tensor/....)
+`type(x)`
 
 ### To  set a data type for a tensor
 `x = torch.tensor(dtype=torch.float32)`
